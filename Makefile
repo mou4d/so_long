@@ -1,18 +1,19 @@
 CC=cc
 FLAGS=-Wall -Werror -Wextra
-INCLUDES=mlx/mlx.h
+# INCLUDES=mlx/mlx.h
+INCLUDES=
 # LIBS=mlx/libmlx.dylib
-SRCS=
-OBJS=$(SRCS:.c=.o)
+SRCS=main.c
+OBJS=$(SRCS:%.c=%.o)
 NAME=so_long
 
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBMLX)
-	$(CC) $(FLAGS) $(OBJS) -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+	$(CC) $(OBJS) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 
 %.o: %.c
-	$(CC) $(FLAGS) -I$(INCLUDES) -c $^ -o $@
+	$(CC) $(FLAGS) $(INCLUDES) -c $^ -o $@
 
 
 clean:
