@@ -6,18 +6,29 @@ INCLUDES=
 SRCS=main.c
 OBJS=$(SRCS:%.c=%.o)
 NAME=so_long
+LIBFT=./libft/libft.a
+FTPRINTF=./ftprintf/libftprintf.a
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIBMLX)
-	$(CC) $(OBJS) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+$(NAME): $(LIBFT) $(FTPRINTF) $(OBJS)
+	$(CC) $(OBJS) -Lmlx -lmlx -framework OpenGL -framework AppKit $(LIBFT) $(FTPRINTF)  -o $(NAME)
 
-%.o: %.c
+%.o: %.c 
 	$(CC) $(FLAGS) $(INCLUDES) -c $^ -o $@
 
+$(LIBFT):
+	make -C ./libft
+
+$(FTPRINTF):
+	make -C ./ftprintf
 
 clean:
 	rm -f $(OBJS)
+	make clean -C ./libft
+	make clean -C ./ftprintf
 
 fclean: clean
 	rm -f $(NAME)
+	make fclean -C ./libft
+	make fclean -C ./ftprintf
