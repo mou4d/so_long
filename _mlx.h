@@ -6,7 +6,7 @@
 /*   By: mbousbaa <mbousbaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 23:59:48 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/04/27 19:27:46 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/04/28 14:19:26 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,5 @@ typedef struct mlx_vars
 	t_player	player;
 }	t_mlx;
 
+int	map_check(char *file_path);
 #endif

@@ -6,18 +6,51 @@
 /*   By: mbousbaa <mbousbaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 22:13:03 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/04/27 19:21:17 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/04/28 14:40:30 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "_mlx.h"
 
-int	map_check()
+int	map_check(char *file_path)
 {
 	int		i;
 	int		map_file;
-	void	*buffer;
+	char	*buffer;
+	char	**map=NULL;
 
-	map_file = 
-	read(fd, buffer, 1024);
+	i = 0;
+	buffer = malloc(1024 * sizeof(char));
+	map_file = open(file_path, O_RDONLY);
+	i = read(map_file, buffer, 1024);
+	buffer[i] = '\0';
+	ft_printf("%s\n", buffer);
+	if (i > 0)
+	{
+		map = ft_split(buffer, '\n');
+	}
+	while (*map)
+	{
+		ft_printf("\n%s\n", *map);
+		map++;
+	}
+	return (i);
+}
+
+int	check_collectibles(const char **map)
+{
+	int	i;
+
+	i = 0;
+	while (*map)
+	{
+		while (*(*map))
+		{
+			if (*(*map) == 'C')
+				i++;
+			(*map)++;
+		}
+		map++;
+	}
+	return (i);
 }

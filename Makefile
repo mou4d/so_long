@@ -3,7 +3,7 @@ FLAGS=-Wall -Werror -Wextra
 # INCLUDES=mlx/mlx.h
 INCLUDES=
 # LIBS=mlx/libmlx.dylib
-SRCS=main.c
+SRCS=main.c helpers.c
 OBJS=$(SRCS:%.c=%.o)
 NAME=so_long
 LIBFT=./libft/libft.a

@@ -6,7 +6,7 @@
 /*   By: mbousbaa <mbousbaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 23:42:23 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/04/27 19:18:40 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/04/28 14:28:47 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,29 +82,31 @@ int	next_frame(t_mlx *e)
 	return (0);
 }
 
-// int main(int argc, char **argv)
-// {
-// 	return 0;
-// }
-
-int	main(void)
+int main(int argc, char **argv)
 {
-	t_mlx	mlx;
-	int		img_w;
-	int		img_h;
-
-	mlx.mlx = mlx_init();
-	mlx.win = mlx_new_window(mlx.mlx, WIN_WIDTH, WIN_HEIGHT, "Soooooo long");
-	mlx.player.img = mlx_xpm_file_to_image(mlx.mlx, "./xpms/ghost_80x80.xpm",
-			&img_w, &img_h);
-	mlx.player.x = 0;
-	mlx.player.y = 0;
-	mlx_put_image_to_window(mlx.mlx, mlx.win, mlx.player.img, 0, 0);
-	// // mlx_clear_window(mlx.mlx, mlx.win);
-	// mlx_put_image_to_window(mlx.mlx, mlx.win, img, 50, 5);
-	mlx_hook(mlx.win, 2, 0, on_esc_click, &mlx);
-	mlx_hook(mlx.win, 17, 0, on_window_destroy, &mlx);
-	mlx_key_hook(mlx.win, on_key_click, &mlx);
-	mlx_loop_hook(mlx.mlx, next_frame, &mlx);
-	mlx_loop(mlx.mlx);
+	if (argc > 1)
+		printf("%d\n", map_check(argv[1]));
+	return 0;
 }
+
+// int	main(void)
+// {
+// 	t_mlx	mlx;
+// 	int		img_w;
+// 	int		img_h;
+
+// 	mlx.mlx = mlx_init();
+// 	mlx.win = mlx_new_window(mlx.mlx, WIN_WIDTH, WIN_HEIGHT, "Soooooo long");
+// 	mlx.player.img = mlx_xpm_file_to_image(mlx.mlx, "./xpms/ghost_80x80.xpm",
+// 			&img_w, &img_h);
+// 	mlx.player.x = 0;
+// 	mlx.player.y = 0;
+// 	mlx_put_image_to_window(mlx.mlx, mlx.win, mlx.player.img, 0, 0);
+// 	// // mlx_clear_window(mlx.mlx, mlx.win);
+// 	// mlx_put_image_to_window(mlx.mlx, mlx.win, img, 50, 5);
+// 	mlx_hook(mlx.win, 2, 0, on_esc_click, &mlx);
+// 	mlx_hook(mlx.win, 17, 0, on_window_destroy, &mlx);
+// 	mlx_key_hook(mlx.win, on_key_click, &mlx);
+// 	mlx_loop_hook(mlx.mlx, next_frame, &mlx);
+// 	mlx_loop(mlx.mlx);
+// }
