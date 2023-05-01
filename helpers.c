@@ -6,7 +6,7 @@
 /*   By: mbousbaa <mbousbaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 22:13:03 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/04/28 14:40:30 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/05/01 00:25:17 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	map_check(char *file_path)
 	char	*buffer;
 	char	**map=NULL;
 
+	map = NULL;
 	i = 0;
 	buffer = malloc(1024 * sizeof(char));
 	map_file = open(file_path, O_RDONLY);

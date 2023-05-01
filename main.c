@@ -6,7 +6,7 @@
 /*   By: mbousbaa <mbousbaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 23:42:23 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/04/28 14:28:47 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/04/30 23:51:13 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,21 @@ int	on_esc_click(int keycode, t_mlx *e)
 	return (0);
 }
 
-void	move_player(int keycode, t_player *player)
+void	move_player(int keycode, t_player *player, int offset)
 {
 	int	curr_pos_x;
 	int	curr_pos_y;
 
 	curr_pos_x = player->x;
 	curr_pos_y = player->y;
-	if (keycode == UP_ARROW && curr_pos_y > 0)
-		player->y -= 80;
+	if (keycode == UP_ARROW && curr_pos_y > offset)
+		player->y -= offset;
 	else if (keycode == DOWN_ARROW && curr_pos_y < WIN_HEIGHT)
-		player->y += 80;
-	else if (keycode == LEFT_ARROW && curr_pos_x > 0)
-		player->x -= 80;
+		player->y += offset;
+	else if (keycode == LEFT_ARROW && curr_pos_x > offset)
+		player->x -= offset;
 	else if (keycode == RIGHT_ARROW && curr_pos_x < WIN_WIDTH)
-		player->x += 80;
+		player->x += offset;
 	ft_printf("x %d\ty %d\n", player->x, player->y);
 }
 
@@ -48,8 +48,7 @@ int	on_key_click(int keycode, t_mlx *e)
 	{
 		ft_printf("%d\n", keycode);
 		mlx_clear_window(e->mlx, e->win);
-		// mlx_destroy_image(e->mlx, e->player.img);
-		move_player(keycode, &e->player);
+		move_player(keycode, &e->player, 30);
 		mlx_put_image_to_window(e->mlx, e->win, e->player.img,
 			e->player.x, e->player.y);
 	}
@@ -68,17 +67,37 @@ int	on_window_destroy(t_mlx *e)
 
 int	next_frame(t_mlx *e)
 {
-	void	*c_img;
-	int		c_img_w;
-	int		c_img_h;
+	void	*wall_img;
+	int		wall_img_w;
+	int		wall_img_h;
+	int		wall_x;
+	int		wall_y;
 	// mlx_key_hook(e->win, on_key_click, e);
-	c_img = mlx_xpm_file_to_image(e->mlx, "./xpms/c_pumpkin.xpm",
-			&c_img_w, &c_img_h);
-	mlx_put_image_to_window(e->mlx, e->win, c_img, 10, 18);
-	mlx_put_image_to_window(e->mlx, e->win, c_img, 80, 80);
-	mlx_put_image_to_window(e->mlx, e->win, c_img, 1000, 500);
-	mlx_put_image_to_window(e->mlx, e->win, c_img, 25, 50);
-	mlx_put_image_to_window(e->mlx, e->win, c_img, 450, 180);
+	// c_img = mlx_xpm_file_to_image(e->mlx, "./xpms/c_pumpkin.xpm",
+	// 		&c_img_w, &c_img_h);
+	// mlx_put_image_to_window(e->mlx, e->win, c_img, 10, 18);
+	// mlx_put_image_to_window(e->mlx, e->win, c_img, 80, 80);
+	// mlx_put_image_to_window(e->mlx, e->win, c_img, 1000, 500);
+	// mlx_put_image_to_window(e->mlx, e->win, c_img, 25, 50);
+	// mlx_put_image_to_window(e->mlx, e->win, c_img, 450, 180);
+	wall_x = 0;
+	wall_img = mlx_xpm_file_to_image(e->mlx, "./xpms/wall_square_Item_Pack.xpm",
+			&wall_img_w, &wall_img_h);
+	wall_y = wall_img_h;
+	while (wall_x <= WIN_WIDTH)
+	{
+		mlx_put_image_to_window(e->mlx, e->win, wall_img, wall_x, 0);
+		mlx_put_image_to_window(e->mlx, e->win, wall_img,
+			wall_x, (WIN_HEIGHT - wall_img_h));
+		wall_x += wall_img_w;
+	}
+	while (wall_y <= WIN_HEIGHT)
+	{
+		mlx_put_image_to_window(e->mlx, e->win, wall_img, 0, wall_y);
+		mlx_put_image_to_window(e->mlx, e->win, wall_img,
+			(WIN_WIDTH - wall_img_w), wall_y);
+		wall_y += wall_img_h;
+	}
 	return (0);
 }
 
@@ -99,9 +118,9 @@ int main(int argc, char **argv)
 // 	mlx.win = mlx_new_window(mlx.mlx, WIN_WIDTH, WIN_HEIGHT, "Soooooo long");
 // 	mlx.player.img = mlx_xpm_file_to_image(mlx.mlx, "./xpms/ghost_80x80.xpm",
 // 			&img_w, &img_h);
-// 	mlx.player.x = 0;
-// 	mlx.player.y = 0;
-// 	mlx_put_image_to_window(mlx.mlx, mlx.win, mlx.player.img, 0, 0);
+// 	mlx.player.x = 30;
+// 	mlx.player.y = 30;
+// 	mlx_put_image_to_window(mlx.mlx, mlx.win, mlx.player.img, 30, 30);
 // 	// // mlx_clear_window(mlx.mlx, mlx.win);
 // 	// mlx_put_image_to_window(mlx.mlx, mlx.win, img, 50, 5);
 // 	mlx_hook(mlx.win, 2, 0, on_esc_click, &mlx);

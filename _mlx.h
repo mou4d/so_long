@@ -6,7 +6,7 @@
 /*   By: mbousbaa <mbousbaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 23:59:48 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/04/28 14:19:26 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/04/30 23:44:13 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # include <fcntl.h>
 # include "ftprintf/ft_printf.h"
 # include "libft/libft.h"
-# define WIN_WIDTH 1920
-# define WIN_HEIGHT 1080
+# define WIN_WIDTH 500
+# define WIN_HEIGHT 500
 # define ESC 53
 # define UP_ARROW 126
 # define DOWN_ARROW 125
@@ -31,6 +31,13 @@ typedef struct player_infos
 	int		x;
 	int		y;
 }	t_player;
+
+typedef struct asset
+{
+	char	type;
+	int		x;
+	int		y;
+}	t_asset;
 
 typedef struct mlx_vars
 {
