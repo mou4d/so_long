@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _mlx.h                                             :+:      :+:    :+:   */
+/*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbousbaa <mbousbaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 23:59:48 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/05/02 17:24:45 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/05/04 16:27:06 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef _MLX_H
-# define _MLX_H
+#ifndef SO_LONG_H
+# define SO_LONG_H
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
@@ -53,6 +53,7 @@ typedef struct map_infos
 	int		map_height;
 	t_asset	exit;
 	t_asset	player;
+	int		is_valid;
 }	t_map;
 
 t_map	*read_map(char	*file_path);

@@ -6,13 +6,12 @@
 /*   By: mbousbaa <mbousbaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 23:42:23 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/05/02 17:24:05 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/05/04 16:27:24 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <mlx.h>
-#include "_mlx.h"
-#include <stdio.h>
+#include "so_long.h"
 
 int	on_esc_click(int keycode, t_mlx *e)
 {
@@ -108,17 +107,18 @@ int main(int argc, char **argv)
 	if (argc > 1)
 	{
 		map = read_map(argv[1]);
-		int i = 0;
-		while (map->map[i])
-			ft_printf("%s\n", map->map[i++]);
 		map = process_map(map);
 		ft_printf("\n### Map details ###\n");
 		ft_printf("Map Width %d", map->map_width);
 		ft_printf(" Map Height %d\n", map->map_height);
 		ft_printf("player : x %d", map->player.x);
 		ft_printf(" | y %d\n", map->player.y);
-		ft_printf("Exit : x %d", map->exit.x);
-		ft_printf(" | y %d\n", map->exit.y);
+		ft_printf("Exit   : x %d", map->exit.x);
+		ft_printf(" | y %d\n\n", map->exit.y);
+		int i = 0;
+		while (map->map[i])
+			ft_printf("%s\n", map->map[i++]);
+		ft_printf("\nmap->is_valid = %d\n", map->is_valid);
 	}
 	return 0;
 }
