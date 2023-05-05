@@ -6,7 +6,7 @@
 /*   By: mbousbaa <mbousbaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 23:59:48 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/05/04 16:27:06 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/05/05 20:25:44 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ typedef struct map_infos
 	t_asset	exit;
 	t_asset	player;
 	int		is_valid;
+	int		collectibles_count;
+	int		exit_count;
 }	t_map;
 
 t_map	*read_map(char	*file_path);

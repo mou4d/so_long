@@ -6,7 +6,7 @@
 /*   By: mbousbaa <mbousbaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 22:13:03 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/05/04 16:41:57 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/05/05 20:23:50 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ int	*get_player_position(char **map)
 	int	founded;
 
 	values = malloc(2 * sizeof(int));
-	i = 0;
-	while (map[i])
+	i = -1;
+	while (map[++i])
 	{
-		j = 0;
+		j = -1;
 		founded = 0;
-		while (map[i][j])
+		while (map[i][++j])
 		{
 			if (map[i][j] == 'P')
 			{
@@ -34,11 +34,9 @@ int	*get_player_position(char **map)
 				values[1] = i;
 				break ;
 			}
-			j++;
 		}
 		if (founded == 1)
 			break ;
-		i++;
 	}
 	return (values);
 }
