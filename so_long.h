@@ -6,12 +6,13 @@
 /*   By: mbousbaa <mbousbaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 23:59:48 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/05/05 20:25:44 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/05/06 18:06:25 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
+# include <mlx.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
@@ -34,7 +35,7 @@ typedef struct player_infos
 
 typedef struct asset
 {
-	char	type;
+	// char	type;
 	int		x;
 	int		y;
 }	t_asset;
@@ -58,6 +59,11 @@ typedef struct map_infos
 	int		exit_count;
 }	t_map;
 
+int		on_esc_click(int keycode, t_mlx *e);
+void	move_player(int keycode, t_player *player, int offset);
+int		on_key_click(int keycode, t_mlx *e);
+int		on_window_destroy(t_mlx *e);
+int		next_frame(t_mlx *e);
 t_map	*read_map(char	*file_path);
-t_map	*process_map(t_map *map);
+void	process_map(t_map *map);
 #endif

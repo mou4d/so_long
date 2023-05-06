@@ -6,46 +6,60 @@
 /*   By: mbousbaa <mbousbaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:39:55 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/05/05 20:28:23 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/05/06 17:19:30 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	*get_map_elements_count(char *map)
+int	check_lines_len(char **map)
 {
-	int		*elements_count;
-	int		i;
+	int	i;
+	int	len;
 
 	i = 0;
-	elements_count = malloc(3 * sizeof(int));
-	if (!elements_count)
-		return (NULL);
-	while (i < 3)
-		elements_count[i++] = 0;
-	while (*map)
+	len = ft_strlen(map[i]);
+	while (map[i])
 	{
-		if (*map == 'C')
-			elements_count[0]++;
-		else if (*map == 'E')
-			elements_count[1]++;
-		else if (*map == 'P')
-			elements_count[2]++;
-		map++;
+		if ((int) ft_strlen(map[i]) != len)
+			return (0);
+		i++;
 	}
-	return (elements_count);
+	return (1);
+}
+
+int	get_map_elements_count(t_map *map_vars)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	map_vars->collectibles_count = 0;
+	map_vars->exit_count = 0;
+	while (map_vars->map[++i])
+	{
+		j = -1;
+		while (map_vars->map[i][++j])
+		{
+			if (map_vars->map[i][j] == 'C')
+				map_vars->collectibles_count++;
+			if (map_vars->map[i][j] == 'E')
+				map_vars->exit_count++;
+		}
+	}
+	ft_printf("\n[DEBUG]\n\tcollectibles : %d \n\texit : %d\n", map_vars->collectibles_count, map_vars->exit_count);
+	if (map_vars->exit_count != 1 || map_vars->collectibles_count < 1)
+		return (0);
+	return (1);
 }
 
 void	check_path(t_map *map, int x, int y)
 {
-	ft_printf("\n[DEBUG] x=%d, y=%d\n", x, y);
-	ft_printf("\n[DEBUG] map_w=%d, map_h=%d\n", map->map_width, map->map_height);
 	if (map->map[y] == NULL || map->map[y][x] == '\0')
 		return ;
 	if (x < 0 || x >= map->map_width
 		|| y < 0 || y >= map->map_height)
 		return ;
-	ft_printf("\n[DEBUG] aimed map element : %c\n", map->map[y][x]);
 	if (map->map[y][x] == '1')
 		return ;
 	map->map[y][x] = '1';
@@ -55,7 +69,7 @@ void	check_path(t_map *map, int x, int y)
 	check_path(map, x, y - 1);
 }
 
-t_map	*process_map(t_map *map)
+void	process_map(t_map *map)
 {
 	int	i;
 	int	j;
@@ -68,13 +82,11 @@ t_map	*process_map(t_map *map)
 		{
 			if (map->map[i][j] == 'P')
 			{
-				map->player.type = 'P';
 				map->player.x = j;
 				map->player.y = i;
 			}
 			else if (map->map[i][j] == 'E')
 			{
-				map->exit.type = 'E';
 				map->exit.x = j;
 				map->exit.y = i;
 			}
@@ -82,6 +94,8 @@ t_map	*process_map(t_map *map)
 	}
 	map->map_width = j;
 	map->map_height = i;
+	if (get_map_elements_count(map) == 0)
+		ft_printf("Error, need more elements in the map");
 	check_path(map, map->player.x, map->player.y);
 	i = -1;
 	while (map->map[++i])
@@ -92,12 +106,11 @@ t_map	*process_map(t_map *map)
 			if (map->map[i][j] != '1')
 			{	
 				map->is_valid = 0;
-				return (map);
+				return ;
 			}
 		}
 	}
 	map->is_valid = 1;
-	return (map);
 }
 
 t_map	*read_map(char	*file_path)
