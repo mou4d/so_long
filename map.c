@@ -6,25 +6,56 @@
 /*   By: mbousbaa <mbousbaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:39:55 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/05/06 17:19:30 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/05/07 01:53:10 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	check_lines_len(char **map)
+int	check_lines_len(t_map *map_vars)
 {
 	int	i;
 	int	len;
 
 	i = 0;
-	len = ft_strlen(map[i]);
-	while (map[i])
+	len = ft_strlen(map_vars->map[i]);
+	while (map_vars->map[i])
 	{
-		if ((int) ft_strlen(map[i]) != len)
+		if ((int) ft_strlen(map_vars->map[i]) != len)
 			return (0);
 		i++;
 	}
+	map_vars->map_height = i;
+	map_vars->map_width = len;
+	return (1);
+}
+
+int	check_map_elemets(char **map, int map_width, int map_height)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (++i < map_height && map[i])
+	{
+		if (map[i][0] != '1' || map[i][map_width - 1] != '1')
+			return (0);
+	}
+	j = -1;
+	while (++j < map_width && map[0][j] && map[map_height - 1][j])
+		if (map[0][j] != '1' || map[map_height - 1][j] != '1')
+			return (0);
+	// i = -1;
+	// while (map[++i])
+	// {
+	// 	j = -1;
+	// 	while (map[i][++j])
+	// 	{
+	// 		if (map[i][j] != '1' || map[i][j] != '0' || map[i][j] != 'P'
+	// 			|| map[i][j] != 'C' || map[i][j] != 'E')
+	// 			return (0);
+	// 	}
+	// }
 	return (1);
 }
 
@@ -85,17 +116,15 @@ void	process_map(t_map *map)
 				map->player.x = j;
 				map->player.y = i;
 			}
-			else if (map->map[i][j] == 'E')
-			{
-				map->exit.x = j;
-				map->exit.y = i;
-			}
 		}
 	}
-	map->map_width = j;
-	map->map_height = i;
+	if (check_lines_len(map) == 0)
+		ft_printf("Error, map need to be aligned\n");
+	ft_printf("[DEBUG] map_width : %d | map_height : %d\n", map->map_width, map->map_height);
+	if (check_map_elemets(map->map, map->map_width, map->map_height) == 0)
+		ft_printf("Error, map not closed\n");
 	if (get_map_elements_count(map) == 0)
-		ft_printf("Error, need more elements in the map");
+		ft_printf("Error, need more elements in the map\n");
 	check_path(map, map->player.x, map->player.y);
 	i = -1;
 	while (map->map[++i])

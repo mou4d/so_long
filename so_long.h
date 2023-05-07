@@ -6,7 +6,7 @@
 /*   By: mbousbaa <mbousbaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 23:59:48 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/05/06 18:06:25 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/05/06 19:24:20 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ typedef struct map_infos
 	char	**map;
 	int		map_width;
 	int		map_height;
-	t_asset	exit;
 	t_asset	player;
 	int		is_valid;
 	int		collectibles_count;

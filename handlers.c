@@ -6,7 +6,7 @@
 /*   By: mbousbaa <mbousbaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 17:23:52 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/05/06 18:05:56 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/05/06 18:37:23 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,26 @@ void	move_player(int keycode, t_player *player, int offset)
 
 int	on_key_click(int keycode, t_mlx *e)
 {
+	int		img_w;
+	int		img_h;
+
 	if (keycode != 0 && e != NULL)
 	{
 		mlx_clear_window(e->mlx, e->win);
+		if (e->player.img != NULL)
+			mlx_destroy_image(e->mlx, e->player.img);
+		if (keycode == LEFT_ARROW)
+			e->player.img = mlx_xpm_file_to_image(e->mlx,
+					"./xpms/ghost_left.xpm", &img_w, &img_h);
+		else if (keycode == RIGHT_ARROW)
+			e->player.img = mlx_xpm_file_to_image(e->mlx,
+					"./xpms/ghost_right.xpm", &img_w, &img_h);
+		else if (keycode == UP_ARROW)
+			e->player.img = mlx_xpm_file_to_image(e->mlx,
+					"./xpms/ghost_up.xpm", &img_w, &img_h);
+		else if (keycode == DOWN_ARROW)
+			e->player.img = mlx_xpm_file_to_image(e->mlx,
+					"./xpms/ghost_down.xpm", &img_w, &img_h);
 		move_player(keycode, &e->player, 30);
 		mlx_put_image_to_window(e->mlx, e->win, e->player.img,
 			e->player.x, e->player.y);
