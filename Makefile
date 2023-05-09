@@ -3,7 +3,7 @@ FLAGS=-Wall -Werror -Wextra
 # INCLUDES=mlx/mlx.h
 INCLUDES=
 # LIBS=mlx/libmlx.dylib
-SRCS=main.c helpers.c map.c handlers.c
+SRCS=main.c helpers.c handlers.c map.c  map2.c
 OBJS=$(SRCS:%.c=%.o)
 NAME=so_long
 LIBFT=./libft/libft.a
@@ -12,7 +12,7 @@ FTPRINTF=./ftprintf/libftprintf.a
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(FTPRINTF) $(OBJS)
-	$(CC) $(OBJS) -Lmlx -lmlx -framework OpenGL -framework AppKit $(LIBFT) $(FTPRINTF)  -o $(NAME)
+	$(CC) $(OBJS) -Lmlx -lmlx -framework OpenGL -framework AppKit $(LIBFT) $(FTPRINTF) -fsanitize=address -g -o $(NAME)
 
 %.o: %.c 
 	$(CC) $(FLAGS) $(INCLUDES) -c $^ -o $@
