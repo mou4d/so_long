@@ -6,7 +6,7 @@
 /*   By: mbousbaa <mbousbaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 23:42:23 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/05/09 12:55:50 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/05/09 12:59:48 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int	main(int ac, char **av)
 			mlx_key_hook(mlx.win, on_key_click, &mlx);
 			// mlx_loop_hook(mlx.mlx, next_frame, &mlx);
 			mlx_loop(mlx.mlx);
-			check_leaks();
 			return (0);
 		}
 		else

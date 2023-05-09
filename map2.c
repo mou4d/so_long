@@ -6,7 +6,7 @@
 /*   By: mbousbaa <mbousbaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:38:38 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/05/09 12:47:32 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/05/09 16:51:40 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,11 @@ t_map	*read_map(char	*file_path)
 {
 	char	buffer[1024];
 	int		i;
+	int		is_valid;
 	t_map	*ret;
 
 	ret = NULL;
+	is_valid = 1;
 	if (ft_strncmp(ft_strchr(file_path, '.'), ".ber", 4) == 0)
 	{
 		ret = malloc(sizeof(t_map));
@@ -84,11 +86,20 @@ t_map	*read_map(char	*file_path)
 			return (NULL);
 		ret->file_fd = open(file_path, O_RDONLY);
 		i = read(ret->file_fd, buffer, 1024);
-		buffer[i] = '\0';
-		ret->map = ft_split(buffer, '\n');
-		ret->map_copy = ft_split(buffer, '\n');
-		if (check_map_new_lines(buffer) == 0)
+		if (i > 0)
+			buffer[i] = '\0';
+		else
+			is_valid = 0;
+		if (check_map_new_lines(buffer) != 0 && is_valid == 1)
+		{
+			ret->map = ft_split(buffer, '\n');
+			ret->map_copy = ft_split(buffer, '\n');
+		}
+		else
+		{
 			free(ret);
+			ret = NULL;
+		}
 	}
 	return (ret);
 }

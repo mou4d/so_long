@@ -6,7 +6,7 @@
 /*   By: mbousbaa <mbousbaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 23:59:48 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/05/09 12:45:58 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/05/09 15:13:52 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	process_map(t_map *map);
 int		validate_map(t_map *map_vars);
 t_map	*read_map(char	*file_path);
 
+int		*get_player_position(char **map);
 void	put_on_screen(t_mlx *mlx, char **map);
 void	move_player(int keycode, t_player *player);
 void	move_player_on_map(t_map *map_vars, int key);
