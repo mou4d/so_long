@@ -6,7 +6,7 @@
 /*   By: mbousbaa <mbousbaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:38:38 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/05/09 16:51:40 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/05/10 17:50:23 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,25 @@ int	validate_map(t_map *map_vars)
 	return (ret);
 }
 
+int	split_map(t_map *map_vars, char *buffer)
+{
+	int	ret;
+
+	ret = 1;
+	ret = check_map_new_lines(buffer);
+	if (ret == 1)
+	{
+		map_vars->map = ft_split(buffer, '\n');
+		map_vars->map_copy = ft_split(buffer, '\n');
+	}
+	else
+	{
+		free(map_vars);
+		map_vars = NULL;
+	}
+	return (ret);
+}
+
 /// @brief read the map file
 /// @param file_path path to the map file
 /// @return pointer to a t_map struct
@@ -86,20 +105,15 @@ t_map	*read_map(char	*file_path)
 			return (NULL);
 		ret->file_fd = open(file_path, O_RDONLY);
 		i = read(ret->file_fd, buffer, 1024);
-		if (i > 0)
-			buffer[i] = '\0';
-		else
-			is_valid = 0;
-		if (check_map_new_lines(buffer) != 0 && is_valid == 1)
-		{
-			ret->map = ft_split(buffer, '\n');
-			ret->map_copy = ft_split(buffer, '\n');
-		}
-		else
+		if (i <= 0)
 		{
 			free(ret);
-			ret = NULL;
+			return (NULL);
 		}
+		buffer[i] = '\0';
+		is_valid = split_map(ret, buffer);
+		if (is_valid == 0)
+			return (NULL);
 	}
 	return (ret);
 }

@@ -6,69 +6,89 @@
 /*   By: mbousbaa <mbousbaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 15:11:50 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/05/09 15:50:11 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/05/10 16:35:01 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	move_up(t_map *map_vars, int *x, int *y, char *prev_element)
+void	move_up(t_mlx *mlx, int *x, int *y, char *prev_element)
 {
-	(*y)--;
-	if (map_vars->map_copy[*y][*x] != '1' && *y > 0)
+	int	img_size[2];
+
+	mlx->map->player.image = mlx_xpm_file_to_image(mlx->mlx,
+			"./xpms/ghost_up_32x32.xpm", &img_size[0], &img_size[1]);
+	if (mlx->map->map_copy[*y - 1][*x] != '1' && *y > 0)
 	{
-		*prev_element = map_vars->map_copy[*y][*x];
-		ft_printf("[DEBUG] prev_element = %c\n", *prev_element);
-		if (map_vars->map_copy[*y][*x] == 'C')
-			map_vars->collectibles_count--;
-		map_vars->map_copy[*y + 1][*x] = '0';
-		map_vars->map_copy[*y][*x] = 'P';
+		mlx->map->map_copy[*y][*x] = *prev_element;
+		(*y)--;
+		*prev_element = mlx->map->map_copy[*y][*x];
+		if (*prev_element != 'E')
+			*prev_element = '0';
+		if (mlx->map->map_copy[*y][*x] == 'C')
+			mlx->map->collectibles_count--;
+		mlx->map->map_copy[*y][*x] = 'P';
 	}
 }
 
-void	move_down(t_map *map_vars, int *x, int *y, char *prev_element)
+void	move_down(t_mlx *mlx, int *x, int *y, char *prev_element)
 {
-	(*y)++;
-	if (map_vars->map_copy[*y][*x] != '1' && *y < map_vars->map_height - 1)
+	int	img_size[2];
+
+	mlx->map->player.image = mlx_xpm_file_to_image(mlx->mlx,
+			"./xpms/ghost_down_32x32.xpm", &img_size[0], &img_size[1]);
+	if (mlx->map->map_copy[*y + 1][*x] != '1' && *y < mlx->map->map_height - 1)
 	{
-		*prev_element = map_vars->map_copy[*y][*x];
-		ft_printf("[DEBUG] prev_element = %c\n", *prev_element);
-		if (map_vars->map_copy[*y][*x] == 'C')
-			map_vars->collectibles_count--;
-		map_vars->map_copy[*y - 1][*x] = '0';
-		map_vars->map_copy[*y][*x] = 'P';
+		mlx->map->map_copy[*y][*x] = *prev_element;
+		(*y)++;
+		*prev_element = mlx->map->map_copy[*y][*x];
+		if (*prev_element != 'E')
+			*prev_element = '0';
+		if (mlx->map->map_copy[*y][*x] == 'C')
+			mlx->map->collectibles_count--;
+		mlx->map->map_copy[*y][*x] = 'P';
 	}
 }
 
-void	move_right(t_map *map_vars, int *x, int *y, char *prev_element)
+void	move_right(t_mlx *mlx, int *x, int *y, char *prev_element)
 {
-	(*x)++;
-	if (map_vars->map_copy[*y][*x] != '1' && *x < map_vars->map_width - 1)
+	int	img_size[2];
+
+	mlx->map->player.image = mlx_xpm_file_to_image(mlx->mlx,
+			"./xpms/ghost_32x32.xpm", &img_size[0], &img_size[1]);
+	if (mlx->map->map_copy[*y][*x + 1] != '1' && *x < mlx->map->map_width - 1)
 	{
-		*prev_element = map_vars->map_copy[*y][*x];
-		ft_printf("[DEBUG] prev_element = %c\n", *prev_element);
-		if (map_vars->map_copy[*y][*x] == 'C')
-			map_vars->collectibles_count--;
-		map_vars->map_copy[*y][*x - 1] = '0';
-		map_vars->map_copy[*y][*x] = 'P';
+		mlx->map->map_copy[*y][*x] = *prev_element;
+		(*x)++;
+		*prev_element = mlx->map->map_copy[*y][*x];
+		if (*prev_element != 'E')
+			*prev_element = '0';
+		if (mlx->map->map_copy[*y][*x] == 'C')
+			mlx->map->collectibles_count--;
+		mlx->map->map_copy[*y][*x] = 'P';
 	}
 }
 
-void	move_left(t_map *map_vars, int *x, int *y, char *prev_element)
+void	move_left(t_mlx *mlx, int *x, int *y, char *prev_element)
 {
-	(*x)--;
-	if (map_vars->map_copy[*y][*x] != '1' && *x > 0)
+	int	img_size[2];
+
+	mlx->map->player.image = mlx_xpm_file_to_image(mlx->mlx,
+			"./xpms/ghost_left_32x32.xpm", &img_size[0], &img_size[1]);
+	if (mlx->map->map_copy[*y][*x - 1] != '1' && *x > 0)
 	{
-		*prev_element = map_vars->map_copy[*y][*x];
-		ft_printf("[DEBUG] prev_element = %c\n", *prev_element);
-		if (map_vars->map_copy[*y][*x] == 'C')
-			map_vars->collectibles_count--;
-		map_vars->map_copy[*y][*x + 1] = '0';
-		map_vars->map_copy[*y][*x] = 'P';
+		mlx->map->map_copy[*y][*x] = *prev_element;
+		(*x)--;
+		*prev_element = mlx->map->map_copy[*y][*x];
+		if (*prev_element != 'E')
+			*prev_element = '0';
+		if (mlx->map->map_copy[*y][*x] == 'C')
+			mlx->map->collectibles_count--;
+		mlx->map->map_copy[*y][*x] = 'P';
 	}
 }
 
-void	move_player_on_map(t_map *map_vars, int key)
+void	move_player_on_map(t_mlx *mlx, int key)
 {
 	int			x;
 	int			y;
@@ -76,22 +96,18 @@ void	move_player_on_map(t_map *map_vars, int key)
 	static char	prev_element;
 
 	exit_hitted = 0;
-	x = get_player_position(map_vars->map_copy)[0];
-	y = get_player_position(map_vars->map_copy)[1];
+	if (prev_element == 0)
+		prev_element = '0';
+	x = get_player_position(mlx->map->map_copy)[0];
+	y = get_player_position(mlx->map->map_copy)[1];
 	if (key == UP_ARROW)
-		move_up(map_vars, &x, &y, &prev_element);
+		move_up(mlx, &x, &y, &prev_element);
 	else if (key == DOWN_ARROW)
-		move_down(map_vars, &x, &y, &prev_element);
+		move_down(mlx, &x, &y, &prev_element);
 	else if (key == RIGHT_ARROW)
-		move_right(map_vars, &x, &y, &prev_element);
+		move_right(mlx, &x, &y, &prev_element);
 	else if (key == LEFT_ARROW)
-		move_left(map_vars, &x, &y, &prev_element);
-	map_vars->player.x = x;
-	map_vars->player.y = y;
-	// ft_printf("p_x=%d, p_y=%d\n", x, y);
-	// int i = -1;
-	// while (map_vars->map_copy[++i])
-	// {
-	// 	ft_printf("%s\n", map_vars->map_copy[i]);
-	// }
+		move_left(mlx, &x, &y, &prev_element);
+	mlx->map->player.x = x;
+	mlx->map->player.y = y;
 }
