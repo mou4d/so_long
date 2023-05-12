@@ -22,12 +22,16 @@ int	check_lines_len(t_map *map_vars)
 
 	i = 0;
 	len = ft_strlen(map_vars->map[i]);
+	if (len > 80)
+		return (0);
 	while (map_vars->map[i])
 	{
 		if ((int) ft_strlen(map_vars->map[i]) != len)
 			return (0);
 		i++;
 	}
+	if (i > 43)
+		return (0); 
 	map_vars->map_height = i;
 	map_vars->map_width = len;
 	return (1);

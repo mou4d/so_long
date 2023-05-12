@@ -6,7 +6,7 @@
 /*   By: mbousbaa <mbousbaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:38:38 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/05/10 17:50:23 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/05/11 16:50:27 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,21 @@ int	validate_map(t_map *map_vars)
 	if (map_vars != NULL)
 	{
 		ret = check_lines_len(map_vars);
-		ret = check_map_elemets(map_vars->map, map_vars->map_width,
-				map_vars->map_height);
-		ret = get_map_elements_count(map_vars);
-		if (ret == 0)
-		{
-			free(map_vars->map);
-			free(map_vars->map_copy);
-			free(map_vars);
-			map_vars = NULL;
-		}
+		ft_printf("[DEBUG] ret = %d\n", ret);
+		if (ret == 1)
+			ret = check_map_elemets(map_vars->map, map_vars->map_width,
+					map_vars->map_height);
+		ft_printf("[DEBUG] ret = %d\n", ret);
+		if (ret == 1)
+			ret = get_map_elements_count(map_vars);
+		ft_printf("[DEBUG] ret = %d\n", ret);
+		// if (ret == 0)
+		// {		
+		// 	free(map_vars->map);
+		// 	free(map_vars->map_copy);
+		// 	free(map_vars);
+		// 	map_vars = NULL;
+		// }
 	}
 	return (ret);
 }
@@ -91,7 +96,7 @@ int	split_map(t_map *map_vars, char *buffer)
 /// @return pointer to a t_map struct
 t_map	*read_map(char	*file_path)
 {
-	char	buffer[1024];
+	char	buffer[16000];
 	int		i;
 	int		is_valid;
 	t_map	*ret;
@@ -104,7 +109,7 @@ t_map	*read_map(char	*file_path)
 		if (!ret)
 			return (NULL);
 		ret->file_fd = open(file_path, O_RDONLY);
-		i = read(ret->file_fd, buffer, 1024);
+		i = read(ret->file_fd, buffer, 16000);
 		if (i <= 0)
 		{
 			free(ret);

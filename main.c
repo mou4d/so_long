@@ -6,7 +6,7 @@
 /*   By: mbousbaa <mbousbaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 23:42:23 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/05/09 12:59:48 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/05/11 16:49:15 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,10 @@ int	main(int ac, char **av)
 	if (ac > 1)
 	{
 		map = read_map(av[1]);
-		validate_map(map);
-		if (map != NULL)
+		// validate_map(map);
+		if (map != NULL && validate_map(map))
 		{	
+			ft_printf("[DEBUG] Map is not null \n");		
 			mlx.mlx = mlx_init();
 			mlx.win = mlx_new_window(mlx.mlx, map->map_width * 32, map->map_height * 32, "Soooooo long");
 			map->collectible.image = mlx_xpm_file_to_image(mlx.mlx,

@@ -6,7 +6,7 @@
 /*   By: mbousbaa <mbousbaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 15:11:50 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/05/10 16:35:01 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/05/11 14:56:08 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,22 +92,22 @@ void	move_player_on_map(t_mlx *mlx, int key)
 {
 	int			x;
 	int			y;
-	int			exit_hitted;
 	static char	prev_element;
 
-	exit_hitted = 0;
 	if (prev_element == 0)
 		prev_element = '0';
 	x = get_player_position(mlx->map->map_copy)[0];
 	y = get_player_position(mlx->map->map_copy)[1];
-	if (key == UP_ARROW)
+	if (key == UP_ARROW || key == 14)
 		move_up(mlx, &x, &y, &prev_element);
-	else if (key == DOWN_ARROW)
+	else if (key == DOWN_ARROW || key == 2)
 		move_down(mlx, &x, &y, &prev_element);
-	else if (key == RIGHT_ARROW)
+	else if (key == RIGHT_ARROW || key == 3)
 		move_right(mlx, &x, &y, &prev_element);
-	else if (key == LEFT_ARROW)
+	else if (key == LEFT_ARROW || key == 1)
 		move_left(mlx, &x, &y, &prev_element);
 	mlx->map->player.x = x;
 	mlx->map->player.y = y;
+	if (mlx->map->collectibles_count == 0 && prev_element == 'E')
+		exit(0);
 }
