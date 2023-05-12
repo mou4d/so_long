@@ -67,3 +67,35 @@ void	put_on_screen(t_mlx *mlx, char **map)
 		}
 	}
 }
+
+void	free_images(t_map *map)
+{
+	if (map->collectible.image != NULL)
+		free(map->collectible.image);
+	if (map->exit.image != NULL)
+		free(map->exit.image);
+	if (map->wall.image != NULL)
+		free(map->wall.image);
+	if (map->player.image != NULL)
+		free(map->player.image);
+}
+
+void	free_exit(t_mlx *mlx, int state)
+{
+	if (mlx->map != NULL)
+	{
+		free_images(mlx->map);
+		if (mlx->map->map != NULL)
+			free(mlx->map->map);
+		if (mlx->map->map_copy != NULL)
+			free(mlx->map->map_copy);
+		if (mlx->map->file_fd > 3)
+			close(mlx->map->file_fd);
+		free(mlx->map);
+	}
+	if (mlx->win != NULL)
+		free(mlx->win);
+	if (mlx->mlx != NULL)
+		free(mlx->mlx);
+	exit(state);
+}

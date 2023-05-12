@@ -123,15 +123,6 @@ void	check_path(t_map *map, int x, int y)
 	check_path(map, x - 1, y);
 	check_path(map, x, y + 1);
 	check_path(map, x, y - 1);
-	// while (*map->map)
-	// {
-	// 	map->is_valid = 1;
-	// 	while (**map->map)
-	// 	{
-	// 		if (**map->map != 1)
-	// 			map->is_valid = 0;
-	// 	}
-	// }
 }
 
 int	check_map_new_lines(char *map)

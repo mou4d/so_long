@@ -49,13 +49,13 @@ typedef struct map_infos
 	int		map_height;
 	t_asset	player;
 	t_asset	collectible;
-	t_asset	floor;
 	t_asset	wall;
 	t_asset	exit;
 	int		collectibles_count;
 	int		exit_count;
 	int		player_count;
 	int		is_valid;
+	int		mv_count;
 }	t_map;
 
 typedef struct mlx_vars
@@ -69,19 +69,19 @@ typedef struct mlx_vars
 int		on_esc_click(int keycode, t_mlx *e);
 int		on_key_click(int keycode, t_mlx *e);
 int		on_window_destroy(t_mlx *e);
-int		next_frame(t_mlx *e);
 
 int		check_lines_len(t_map *map_vars);
 int		check_map_elemets(char **map, int map_width, int map_height);
 int		check_map_new_lines(char *map);
 int		get_map_elements_count(t_map *map_vars);
 void	check_path(t_map *map, int x, int y);
-void	process_map(t_map *map);
+int		process_map(t_map *map);
 int		validate_map(t_map *map_vars);
 t_map	*read_map(char	*file_path);
 
 int		*get_player_position(char **map);
 void	put_on_screen(t_mlx *mlx, char **map);
+void	free_exit(t_mlx *mlx, int state);
 
 void	move_player_on_map(t_mlx *mlx, int key);
 #endif

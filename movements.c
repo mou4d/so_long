@@ -16,6 +16,7 @@ void	move_up(t_mlx *mlx, int *x, int *y, char *prev_element)
 {
 	int	img_size[2];
 
+	free(mlx->map->player.image);
 	mlx->map->player.image = mlx_xpm_file_to_image(mlx->mlx,
 			"./xpms/ghost_up_32x32.xpm", &img_size[0], &img_size[1]);
 	if (mlx->map->map_copy[*y - 1][*x] != '1' && *y > 0)
@@ -28,6 +29,8 @@ void	move_up(t_mlx *mlx, int *x, int *y, char *prev_element)
 		if (mlx->map->map_copy[*y][*x] == 'C')
 			mlx->map->collectibles_count--;
 		mlx->map->map_copy[*y][*x] = 'P';
+		mlx->map->mv_count += 1;
+		ft_printf("steps : %d\n", mlx->map->mv_count);
 	}
 }
 
@@ -35,6 +38,7 @@ void	move_down(t_mlx *mlx, int *x, int *y, char *prev_element)
 {
 	int	img_size[2];
 
+	free(mlx->map->player.image);
 	mlx->map->player.image = mlx_xpm_file_to_image(mlx->mlx,
 			"./xpms/ghost_down_32x32.xpm", &img_size[0], &img_size[1]);
 	if (mlx->map->map_copy[*y + 1][*x] != '1' && *y < mlx->map->map_height - 1)
@@ -47,6 +51,8 @@ void	move_down(t_mlx *mlx, int *x, int *y, char *prev_element)
 		if (mlx->map->map_copy[*y][*x] == 'C')
 			mlx->map->collectibles_count--;
 		mlx->map->map_copy[*y][*x] = 'P';
+		mlx->map->mv_count += 1;
+		ft_printf("steps : %d\n", mlx->map->mv_count);
 	}
 }
 
@@ -54,6 +60,7 @@ void	move_right(t_mlx *mlx, int *x, int *y, char *prev_element)
 {
 	int	img_size[2];
 
+	free(mlx->map->player.image);
 	mlx->map->player.image = mlx_xpm_file_to_image(mlx->mlx,
 			"./xpms/ghost_32x32.xpm", &img_size[0], &img_size[1]);
 	if (mlx->map->map_copy[*y][*x + 1] != '1' && *x < mlx->map->map_width - 1)
@@ -66,6 +73,8 @@ void	move_right(t_mlx *mlx, int *x, int *y, char *prev_element)
 		if (mlx->map->map_copy[*y][*x] == 'C')
 			mlx->map->collectibles_count--;
 		mlx->map->map_copy[*y][*x] = 'P';
+		mlx->map->mv_count++;
+		ft_printf("steps : %d\n", mlx->map->mv_count);
 	}
 }
 
@@ -73,6 +82,7 @@ void	move_left(t_mlx *mlx, int *x, int *y, char *prev_element)
 {
 	int	img_size[2];
 
+	free(mlx->map->player.image);
 	mlx->map->player.image = mlx_xpm_file_to_image(mlx->mlx,
 			"./xpms/ghost_left_32x32.xpm", &img_size[0], &img_size[1]);
 	if (mlx->map->map_copy[*y][*x - 1] != '1' && *x > 0)
@@ -85,6 +95,8 @@ void	move_left(t_mlx *mlx, int *x, int *y, char *prev_element)
 		if (mlx->map->map_copy[*y][*x] == 'C')
 			mlx->map->collectibles_count--;
 		mlx->map->map_copy[*y][*x] = 'P';
+		mlx->map->mv_count++;
+		ft_printf("steps : %d\n", mlx->map->mv_count);
 	}
 }
 
@@ -109,5 +121,5 @@ void	move_player_on_map(t_mlx *mlx, int key)
 	mlx->map->player.x = x;
 	mlx->map->player.y = y;
 	if (mlx->map->collectibles_count == 0 && prev_element == 'E')
-		exit(0);
+		free_exit(mlx, 0);
 }

@@ -12,37 +12,26 @@
 
 #include "so_long.h"
 
-void	process_map(t_map *map)
+int	process_map(t_map *map)
 {
 	int	i;
-	int	j;
 
-	i = -1;
-	while (map->map[++i])
-	{
-		j = -1;
-		while (map->map[i][++j])
-		{
-			if (map->map[i][j] == 'P')
-			{
-				map->player.x = j;
-				map->player.y = i;
-			}
-		}
-	}
-	if (get_map_elements_count(map) == 0)
-		ft_printf("Error, need more elements in the map\n");
+	map->player.x = get_player_position(map->map_copy)[0];
+	map->player.y = get_player_position(map->map_copy)[1];
 	check_path(map, map->player.x, map->player.y);
 	i = -1;
 	while (map->map[++i])
 	{
-		if (ft_strchr(map->map[i], '1') == NULL)
+		if (ft_strchr(map->map[i], 'E') != NULL
+			|| ft_strchr(map->map[i], 'C') != NULL
+			|| ft_strchr(map->map[i], 'P') != NULL)
 		{
 			map->is_valid = 0;
-			break ;
+			return (0);
 		}
 	}
 	map->is_valid = 1;
+	return (1);
 }
 
 int	validate_map(t_map *map_vars)
@@ -53,21 +42,13 @@ int	validate_map(t_map *map_vars)
 	if (map_vars != NULL)
 	{
 		ret = check_lines_len(map_vars);
-		ft_printf("[DEBUG] ret = %d\n", ret);
 		if (ret == 1)
 			ret = check_map_elemets(map_vars->map, map_vars->map_width,
 					map_vars->map_height);
-		ft_printf("[DEBUG] ret = %d\n", ret);
 		if (ret == 1)
 			ret = get_map_elements_count(map_vars);
-		ft_printf("[DEBUG] ret = %d\n", ret);
-		// if (ret == 0)
-		// {		
-		// 	free(map_vars->map);
-		// 	free(map_vars->map_copy);
-		// 	free(map_vars);
-		// 	map_vars = NULL;
-		// }
+		if (ret == 1)
+			ret = process_map(map_vars);
 	}
 	return (ret);
 }
