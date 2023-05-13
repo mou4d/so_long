@@ -16,20 +16,21 @@ int	process_map(t_map *map)
 {
 	int	i;
 
-	map->player.x = get_player_position(map->map_copy)[0];
-	map->player.y = get_player_position(map->map_copy)[1];
+	get_player_position(map);
 	check_path(map, map->player.x, map->player.y);
 	i = -1;
 	while (map->map[++i])
 	{
 		if (ft_strchr(map->map[i], 'E') != NULL
 			|| ft_strchr(map->map[i], 'C') != NULL
-			|| ft_strchr(map->map[i], 'P') != NULL)
+			|| ft_strchr(map->map[i], 'P') != NULL
+			|| ft_strchr(map->map[i], '0') != NULL)
 		{
 			map->is_valid = 0;
 			return (0);
 		}
 	}
+	i = -1;
 	map->is_valid = 1;
 	return (1);
 }
@@ -84,7 +85,7 @@ t_map	*read_map(char	*file_path)
 
 	ret = NULL;
 	is_valid = 1;
-	if (ft_strncmp(ft_strchr(file_path, '.'), ".ber", 4) == 0)
+	if (ft_strncmp(ft_strrchr(file_path, '.'), ".ber", 4) == 0)
 	{
 		ret = malloc(sizeof(t_map));
 		if (!ret)

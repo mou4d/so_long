@@ -78,8 +78,10 @@ void	check_path(t_map *map, int x, int y);
 int		process_map(t_map *map);
 int		validate_map(t_map *map_vars);
 t_map	*read_map(char	*file_path);
+void	free_map(char **map);
 
-int		*get_player_position(char **map);
+// int		*get_player_position(char **map);
+void	get_player_position(t_map *map_vars);
 void	put_on_screen(t_mlx *mlx, char **map);
 void	free_exit(t_mlx *mlx, int state);
 

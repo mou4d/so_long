@@ -12,7 +12,7 @@ FTPRINTF=./ftprintf/libftprintf.a
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(FTPRINTF) $(OBJS)
-	$(CC) $(OBJS) -Lmlx -lmlx -framework OpenGL -framework AppKit $(LIBFT) $(FTPRINTF) -fsanitize=address -g -o $(NAME)
+	$(CC) $(OBJS) -lmlx -framework OpenGL -framework AppKit $(LIBFT) $(FTPRINTF) -o $(NAME)
 
 %.o: %.c 
 	$(CC) $(FLAGS) $(INCLUDES) -c $^ -o $@
@@ -32,3 +32,4 @@ fclean: clean
 	rm -f $(NAME)
 	make fclean -C ./libft
 	make fclean -C ./ftprintf
+re: fclean all

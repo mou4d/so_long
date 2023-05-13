@@ -12,33 +12,30 @@
 
 #include "so_long.h"
 
-int	*get_player_position(char **map)
+void	get_player_position(t_map *map_vars)
 {
-	int	*values;
 	int	i;
 	int	j;
 	int	founded;
 
-	values = malloc(2 * sizeof(int));
 	i = -1;
-	while (map[++i])
+	while (map_vars->map_copy[++i])
 	{
 		j = -1;
 		founded = 0;
-		while (map[i][++j])
+		while (map_vars->map_copy[i][++j])
 		{
-			if (map[i][j] == 'P')
+			if (map_vars->map_copy[i][j] == 'P')
 			{
 				founded = 1;
-				values[0] = j;
-				values[1] = i;
+				map_vars->player.x = j;
+				map_vars->player.y = i;
 				break ;
 			}
 		}
 		if (founded == 1)
 			break ;
 	}
-	return (values);
 }
 
 void	put_on_screen(t_mlx *mlx, char **map)
@@ -68,34 +65,31 @@ void	put_on_screen(t_mlx *mlx, char **map)
 	}
 }
 
-void	free_images(t_map *map)
+void	free_images(t_mlx *mlx)
 {
-	if (map->collectible.image != NULL)
-		free(map->collectible.image);
-	if (map->exit.image != NULL)
-		free(map->exit.image);
-	if (map->wall.image != NULL)
-		free(map->wall.image);
-	if (map->player.image != NULL)
-		free(map->player.image);
+	if (mlx->map->collectible.image != NULL)
+		mlx_destroy_image(mlx->mlx, mlx->map->collectible.image);
+	if (mlx->map->exit.image != NULL)
+		mlx_destroy_image(mlx->mlx, mlx->map->exit.image);
+	if (mlx->map->wall.image != NULL)
+		mlx_destroy_image(mlx->mlx, mlx->map->wall.image);
+	if (mlx->map->player.image != NULL)
+		mlx_destroy_image(mlx->mlx, mlx->map->player.image);
 }
 
 void	free_exit(t_mlx *mlx, int state)
 {
 	if (mlx->map != NULL)
 	{
-		free_images(mlx->map);
-		if (mlx->map->map != NULL)
-			free(mlx->map->map);
-		if (mlx->map->map_copy != NULL)
-			free(mlx->map->map_copy);
+		free_images(mlx);
+		if (mlx->map->map)
+			free_map(mlx->map->map_copy);
+		if (mlx->map->map_copy)
+			free_map(mlx->map->map);
 		if (mlx->map->file_fd > 3)
 			close(mlx->map->file_fd);
-		free(mlx->map);
 	}
-	if (mlx->win != NULL)
-		free(mlx->win);
-	if (mlx->mlx != NULL)
-		free(mlx->mlx);
+	if (mlx->win != NULL && mlx->mlx != NULL)
+		mlx_destroy_window(mlx->mlx, mlx->win);
 	exit(state);
 }

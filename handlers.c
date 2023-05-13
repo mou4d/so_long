@@ -15,10 +15,7 @@
 int	on_esc_click(int keycode, t_mlx *e)
 {
 	if (keycode == ESC && e != NULL)
-	{
-		mlx_destroy_window(e->mlx, e->win);
-		exit(0);
-	}
+		free_exit(e, 0);
 	return (0);
 }
 
@@ -35,10 +32,23 @@ int	on_key_click(int keycode, t_mlx *e)
 
 int	on_window_destroy(t_mlx *e)
 {
-	if (e != NULL)
+	free_exit(e, 0);
+	return (0);
+}
+
+void	free_map(char **map)
+{
+	int	i;
+
+	if (map != NULL)
 	{
-		free(e->win);
-		free(e->mlx);
+		i = -1;
+		while (map[++i])
+		{
+			free(map[i]);
+			map[i] = NULL;
+		}
+		free(map);
+		map = NULL;
 	}
-	exit(0);
 }

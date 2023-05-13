@@ -31,7 +31,7 @@ int	check_lines_len(t_map *map_vars)
 		i++;
 	}
 	if (i > 43)
-		return (0); 
+		return (0);
 	map_vars->map_height = i;
 	map_vars->map_width = len;
 	return (1);
